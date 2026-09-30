@@ -72,6 +72,14 @@
             display: block;
         }
 
+        /* Badge wrapper to keep badge + market info together */
+        .badge-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
         .price-update-badge {
             background: #48cae4;
             color: white;
@@ -79,7 +87,6 @@
             padding: 4px 12px;
             border-radius: 20px;
             display: inline-block;
-            margin-bottom: 15px;
             font-weight: 600;
             animation: pulse 2s infinite;
         }
@@ -88,6 +95,20 @@
             0% { opacity: 0.7; }
             50% { opacity: 1; }
             100% { opacity: 0.7; }
+        }
+
+        .market-info {
+            font-size: 0.72em;
+            color: #666;
+            margin-top: 8px;
+            padding: 6px 12px;
+            background: #f5f0ff;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .market-info strong {
+            color: #8338ec;
         }
 
         .input-group {
@@ -245,20 +266,6 @@
             margin-top: 5px;
             font-style: italic;
         }
-
-        .market-info {
-            font-size: 0.72em;
-            color: #666;
-            margin-top: 6px;
-            padding: 6px 10px;
-            background: #f5f0ff;
-            border-radius: 12px;
-            display: inline-block;
-        }
-
-        .market-info strong {
-            color: #8338ec;
-        }
     </style>
 </head>
 <body>
@@ -272,7 +279,11 @@
         <h1>NXPC Converter</h1>
         <span class="subtitle">Nexpace Token Calculator</span>
         
-        <div class="price-update-badge" id="priceStatus">🔄 Fetching price...</div>
+        <!-- Badge + Market Info grouped together -->
+        <div class="badge-area">
+            <div class="price-update-badge" id="priceStatus">🔄 Fetching price...</div>
+            <div class="market-info" id="marketInfo" style="display:none;"></div>
+        </div>
 
         <div class="input-group">
             <label for="nxpcPrice">Price of 1 NXPC <span id="priceTimestamp" style="font-weight:400;font-size:0.7em;color:#999;"></span></label>
@@ -282,7 +293,6 @@
                 <span id="priceLoader" class="price-loader" style="display:none;"></span>
             </div>
             <div class="manual-input-hint">💡 You can also manually edit the price</div>
-            <div class="market-info" id="marketInfo" style="display:none;"></div>
         </div>
 
         <div class="input-group">
@@ -397,7 +407,7 @@
                     priceStatus.textContent = '✅ Live Price • CoinPaprika';
                     priceStatus.style.background = '#48cae4';
                     
-                    // Update market info bar
+                    // Update market info bar (now below the badge)
                     const change24h = data?.quotes?.USD?.percent_change_24h;
                     const marketCap = data?.quotes?.USD?.market_cap;
                     if (change24h !== undefined && marketCap !== undefined) {
