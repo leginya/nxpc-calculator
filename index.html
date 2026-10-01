@@ -292,6 +292,8 @@
                 <span class="currency-tag">USD</span>
                 <span id="priceLoader" class="price-loader" style="display:none;"></span>
             </div>
+            <!-- Update status now sits above the manual hint -->
+            <div class="live-price-status" id="livePriceStatus">⏱️ Price updates every 60 seconds • CoinPaprika</div>
             <div class="manual-input-hint">💡 You can also manually edit the price</div>
         </div>
 
@@ -317,8 +319,6 @@
             <div id="nesoResult" class="result-value">0</div>
             <span class="token-name">Neso</span>
         </div>
-
-        <div class="live-price-status" id="livePriceStatus">⏱️ Price updates every 60 seconds • CoinPaprika</div>
     </div>
 
     <script>
@@ -407,7 +407,7 @@
                     priceStatus.textContent = '✅ Live Price • CoinPaprika';
                     priceStatus.style.background = '#48cae4';
                     
-                    // Update market info bar (now below the badge)
+                    // Update market info bar
                     const change24h = data?.quotes?.USD?.percent_change_24h;
                     const marketCap = data?.quotes?.USD?.market_cap;
                     if (change24h !== undefined && marketCap !== undefined) {
